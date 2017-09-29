@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+before_script":
+    "mysql -e 'create database ponto_inteligente;'"
 test:
   adapter: mysql2
   database: ponto_inteligente
