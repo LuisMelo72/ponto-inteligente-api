@@ -2,7 +2,7 @@ language: java
 jdk:
   - oraclejdk8
 before_script":
-    "mysql -e 'create database ponto_inteligente;'"
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS ponto_inteligente;" -uroot; fi
 test:
   adapter: mysql2
   database: ponto_inteligente
