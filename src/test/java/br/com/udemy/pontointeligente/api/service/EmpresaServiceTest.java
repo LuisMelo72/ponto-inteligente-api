@@ -1,6 +1,5 @@
 package br.com.udemy.pontointeligente.api.service;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,7 +39,7 @@ public class EmpresaServiceTest {
 	
 	@Test
 	public void deveBuscarEmpresaPorCnpj() {
-		assertThat(empresaService.buscaPorCnpj(CNPJ).isPresent(), equalTo(true));
+		assertThat(empresaService.buscaPorCnpj(CNPJ).isPresent(), is(true));
 	}
 	
 	@Test
