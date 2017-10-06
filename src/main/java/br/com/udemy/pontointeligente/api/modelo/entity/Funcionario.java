@@ -28,7 +28,7 @@ import br.com.udemy.pontointeligente.api.enumerate.Perfil;
 
 @Entity
 @Table(name="funcionario")
-public class Funcionario implements Criavel, Atualizavel {
+public class Funcionario implements DataCriavel, DataAtualizavel {
 	
 	private static final long serialVersionUID = -5064947394723511850L;
 

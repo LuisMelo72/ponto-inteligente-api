@@ -21,7 +21,7 @@ import br.com.udemy.pontointeligente.api.enumerate.LancamentoTipo;
 
 @Entity
 @Table(name="lancamento")
-public class Lancamento implements Criavel, Atualizavel {
+public class Lancamento implements DataCriavel, DataAtualizavel {
 	
 	private static final long serialVersionUID = -7111624292387087313L;
 

@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="empresa")
-public class Empresa implements Criavel, Atualizavel {
+public class Empresa implements DataCriavel, DataAtualizavel {
 	
 	private static final long serialVersionUID = -579108758159771658L;
 
