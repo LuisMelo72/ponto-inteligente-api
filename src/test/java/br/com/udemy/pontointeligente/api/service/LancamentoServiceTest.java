@@ -19,9 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.udemy.pontointeligente.api.modelo.entity.Funcionario;
 import br.com.udemy.pontointeligente.api.modelo.entity.Lancamento;
-import br.com.udemy.pontointeligente.api.repository.FuncionarioRepository;
 import br.com.udemy.pontointeligente.api.repository.LancamentoRepository;
 
 @RunWith(SpringRunner.class)
