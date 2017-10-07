@@ -47,13 +47,13 @@ public class Funcionario implements DataCriavel, DataAtualizavel {
 	@Column(nullable=false)
 	private String cpf;
 	
-	@Column(name="valor_hora", nullable=false)
+	@Column(name="valor_hora", nullable=true)
 	private BigDecimal valorHora;
 	
-	@Column(name="quantidade_horas_trabalho_dia", nullable=false)
+	@Column(name="quantidade_horas_trabalho_dia", nullable=true)
 	private Float quantidadeHorasTrabalhoDia;
 	
-	@Column(name="quantidade_horas_almoco", nullable=false)
+	@Column(name="quantidade_horas_almoco", nullable=true)
 	private Float quantidadeHorasAlmoco;
 	
 	@Enumerated(EnumType.STRING)

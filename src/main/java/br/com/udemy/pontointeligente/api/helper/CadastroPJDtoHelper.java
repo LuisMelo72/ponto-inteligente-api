@@ -5,7 +5,19 @@ import br.com.udemy.pontointeligente.api.modelo.entity.Funcionario;
 
 public class CadastroPJDtoHelper {
 	
+	CadastroPJDtoHelper() {
+	
+	}
+	
 	public static CadastroPJDto toCadastroPJDto(Funcionario funcionario) {
+		
+		CadastroPJDto cadastroPJDto = convertToCadastroPJDto(funcionario);
+		
+		return cadastroPJDto;
+		
+	}
+
+	private static CadastroPJDto convertToCadastroPJDto(Funcionario funcionario) {
 		
 		CadastroPJDto cadastroPJDto = new CadastroPJDto();
 		cadastroPJDto.setCnpj(funcionario.getEmpresa().getCnpj());

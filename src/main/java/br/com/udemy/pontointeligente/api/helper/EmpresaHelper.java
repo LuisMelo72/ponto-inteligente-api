@@ -11,6 +11,14 @@ public class EmpresaHelper {
 	
 	public static Empresa toEmpresa(CadastroPJDto cadastroPJDto) {
 		
+		Empresa empresa = convertToEmpresa(cadastroPJDto);
+		
+		return empresa;
+		
+	}
+
+	private static Empresa convertToEmpresa(CadastroPJDto cadastroPJDto) {
+		
 		Empresa empresa = new Empresa();
 		empresa.setCnpj(cadastroPJDto.getCnpj());
 		empresa.setRazaoSocial(cadastroPJDto.getRazaoSocial());

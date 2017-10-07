@@ -21,10 +21,10 @@ create table funcionario (
     email varchar(255) not null,
     nome varchar(255) not null,
     perfil varchar(255) not null,
-    quantidade_horas_almoco float not null,
-    quantidade_horas_trabalho_dia float not null,
+    quantidade_horas_almoco float,
+    quantidade_horas_trabalho_dia float,
     senha varchar(255) not null,
-    valor_hora decimal(19,2) not null,
+    valor_hora decimal(19,2),
     empresa_id bigint,
     primary key (id)
 );
