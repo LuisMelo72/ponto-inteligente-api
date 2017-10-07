@@ -1,4 +1,4 @@
-package br.com.udemy.pontointeligente.api.util;
+package br.com.udemy.pontointeligente.api.helper;
 
 import java.io.Serializable;
 
@@ -6,13 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class PasswordUtil implements Serializable {
+import br.com.udemy.pontointeligente.api.helper.StringHelper;
+
+public class PasswordHelper implements Serializable {
 
 	private static final long serialVersionUID = 2517329498437861455L;
 	
-	private static final Logger LOG = LoggerFactory.getLogger(PasswordUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PasswordHelper.class);
 	
-	PasswordUtil() {
+	PasswordHelper() {
 		
 	}
 	

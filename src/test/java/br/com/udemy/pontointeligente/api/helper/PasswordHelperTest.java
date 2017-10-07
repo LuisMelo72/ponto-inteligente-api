@@ -1,4 +1,4 @@
-package br.com.udemy.pontointeligente.api.util;
+package br.com.udemy.pontointeligente.api.helper;
 
 
 import org.junit.Test;
@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PasswordUtilTest {
+public class PasswordHelperTest {
 
 	private static final String SENHA = "123456";
 	
@@ -17,14 +17,14 @@ public class PasswordUtilTest {
 	@Test
 	public void deveGerarNullParaSenhaNull() {
 		
-		assertThat(PasswordUtil.geraBCrypt(null), nullValue());
+		assertThat(PasswordHelper.geraBCrypt(null), nullValue());
 		
 	}
 	
 	@Test
 	public void deveGerarSenhaHash() {
 		
-		assertThat(encoder.matches(SENHA, PasswordUtil.geraBCrypt(SENHA)), equalTo(true));
+		assertThat(encoder.matches(SENHA, PasswordHelper.geraBCrypt(SENHA)), equalTo(true));
 		
 	}
 	

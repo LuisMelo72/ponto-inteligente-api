@@ -12,7 +12,7 @@ public interface FuncionarioService {
 	 * @param funcionario
 	 * @return Funcionario
 	 */
-	Funcionario persistir(Funcionario funcionario);
+	Funcionario persiste(Funcionario funcionario);
 	
 	/**
 	 * Busca e retorna um funcionario dado um CPF

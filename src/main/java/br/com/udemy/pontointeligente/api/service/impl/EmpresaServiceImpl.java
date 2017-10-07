@@ -34,6 +34,8 @@ public class EmpresaServiceImpl implements EmpresaService {
 		
 		LOG.info("Persistindo empresa: {}", empresa);
 		
+		empresaRepository.save(empresa);
+		
 		return empresa;
 		
 	}

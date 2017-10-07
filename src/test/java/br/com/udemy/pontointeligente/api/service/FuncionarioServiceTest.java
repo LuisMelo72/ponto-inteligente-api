@@ -39,7 +39,7 @@ public class FuncionarioServiceTest {
 	
 	@Test
 	public void devePersistirFuncionario() {
-		assertThat(funcionarioService.persistir(new Funcionario()), is(notNullValue()));
+		assertThat(funcionarioService.persiste(new Funcionario()), is(notNullValue()));
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-package br.com.udemy.pontointeligente.api.util;
+package br.com.udemy.pontointeligente.api.helper;
 
 import java.io.Serializable;
 

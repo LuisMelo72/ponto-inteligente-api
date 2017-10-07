@@ -19,7 +19,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Autowired private FuncionarioRepository funcionarioRepository;
 
 	@Override
-	public Funcionario persistir(Funcionario funcionario) {
+	public Funcionario persiste(Funcionario funcionario) {
 		
 		LOG.info("Persistindo funcionario {}", funcionario);
 		
