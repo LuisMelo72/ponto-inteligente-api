@@ -25,7 +25,7 @@ import br.com.udemy.pontointeligente.api.service.EmpresaService;
 import br.com.udemy.pontointeligente.api.service.FuncionarioService;
 
 @RestController
-@RequestMapping("api/cadastrarpj")
+@RequestMapping("/api/cadastrarpj")
 @CrossOrigin(origins="*")
 public class CadastroPJController {
 	
