@@ -1,6 +1,7 @@
 package br.com.udemy.pontointeligente.api.controller;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -16,17 +17,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.udemy.pontointeligente.api.enumerate.LancamentoTipo;
+import br.com.udemy.pontointeligente.api.helper.DateHelper;
 import br.com.udemy.pontointeligente.api.helper.LancamentoDtoHelper;
-import br.com.udemy.pontointeligente.api.helper.LancamentoHelper;
 import br.com.udemy.pontointeligente.api.helper.StringHelper;
 import br.com.udemy.pontointeligente.api.modelo.dto.LancamentoDto;
 import br.com.udemy.pontointeligente.api.modelo.entity.Funcionario;
@@ -120,16 +123,93 @@ public class LancamentoController {
 			
 		} else {
 			
-			Optional<Funcionario> funcionario = funcionarioService.buscaPorId(lancamentoDto.getFuncionarioId());
+			Lancamento lancamento = convertToLancamento(lancamentoDto);
 			
-			Lancamento lancamento = LancamentoHelper.toLancamento(lancamentoDto);
-			lancamento.setFuncionario(funcionario.get());
+			lancamentoService.persiste(lancamento);
 			
-			lancamentoService.persistir(lancamento);
+			response.setData(LancamentoDtoHelper.toLancamentoDto(lancamento));
 			
 			return ResponseEntity.ok(response);
 			
 		}
+		
+	}
+	
+	@PutMapping(value="/{id}")
+	public ResponseEntity<Response<LancamentoDto>> atualiza(@PathVariable("id") Long id, 
+			@Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result) throws ParseException{
+		
+		LOG.info("Atualizando lancamento: {}", lancamentoDto.toString());
+		
+		Response<LancamentoDto> response = new Response<>();
+		
+		validaFuncionario(lancamentoDto.getFuncionarioId(), result);
+		
+		if(result.hasErrors()) {
+			
+			result.getAllErrors().forEach(error -> response.getErros().add(error.getDefaultMessage()));
+			
+			return ResponseEntity.badRequest().body(response);
+			
+		} else {
+			
+			lancamentoDto.setId(Optional.of(id));
+			
+			Lancamento lancamento = convertToLancamento(lancamentoDto);
+			lancamento.setDataCriacao(new Date());
+			
+			lancamentoService.persiste(lancamento);
+			
+			response.setData(LancamentoDtoHelper.toLancamentoDto(lancamento));
+			
+			return ResponseEntity.ok(response);
+			
+		}
+		
+	}
+	
+	@DeleteMapping(value="{id}")
+	public ResponseEntity<Response<String>> remove(@PathVariable("id") Long id){
+		
+		LOG.info("Removendo lancamento ID: {}", id);
+		
+		Response<String> response = new Response<>();
+		
+		Optional<Lancamento> lancamento = lancamentoService.buscaPorId(id);
+		
+		if(!lancamento.isPresent()) {
+			
+			LOG.info("Erro ao remover devido ao lancamento ID: {}", id);
+			
+			response.getErros().add("Erro ao remover lançamento. Registro não encontrado para o id " + id);
+			
+			return ResponseEntity.badRequest().body(response);
+			
+		} else {
+			
+			lancamentoService.remove(id);
+			
+			return ResponseEntity.ok(response);
+			
+		}
+		
+	}
+	
+	private Lancamento convertToLancamento(LancamentoDto lancamentoDto) throws ParseException {
+		
+		Lancamento lancamento = new Lancamento();
+		lancamento.setData(DateHelper.toDate(lancamentoDto.getData(), "yyyy-MM-dd HH:mm:ss"));
+		lancamento.setDescricao(lancamentoDto.getDescricao());
+		lancamento.setLocalizacao(lancamentoDto.getLocalizacao());
+		lancamento.setTipo(LancamentoTipo.valueOf(lancamentoDto.getTipo()));
+		
+		lancamentoDto.getId().ifPresent(id -> lancamento.setId(id));
+		
+		Optional<Funcionario> funcionario = funcionarioService.buscaPorId(lancamentoDto.getFuncionarioId());
+		
+		funcionario.ifPresent(func -> lancamento.setFuncionario(func));
+		
+		return lancamento;
 		
 	}
 

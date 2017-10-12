@@ -15,7 +15,7 @@ public interface LancamentoService {
 	 * @param lancamento
 	 * @return
 	 */
-	Lancamento persistir(Lancamento lancamento);
+	Lancamento persiste(Lancamento lancamento);
 	
 	/**
 	 * Remove um lancamento na base de dados

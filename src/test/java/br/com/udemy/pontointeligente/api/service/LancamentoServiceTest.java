@@ -44,7 +44,7 @@ public class LancamentoServiceTest {
 	
 	@Test
 	public void devePersistirLancamento() {
-		assertThat(lancamentoService.persistir(new Lancamento()), is(notNullValue()));
+		assertThat(lancamentoService.persiste(new Lancamento()), is(notNullValue()));
 	}
 	
 	@Test

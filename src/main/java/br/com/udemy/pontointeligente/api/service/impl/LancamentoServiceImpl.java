@@ -21,7 +21,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Autowired private LancamentoRepository lancamentoRepository;
 
 	@Override
-	public Lancamento persistir(Lancamento lancamento) {
+	public Lancamento persiste(Lancamento lancamento) {
 		
 		LOG.info("Persistindo lancamento {}", lancamento);
 		
