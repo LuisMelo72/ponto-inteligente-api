@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.udemy.pontointeligente.api.enumerate.LancamentoTipo;
 import br.com.udemy.pontointeligente.api.helper.DateHelper;
 import br.com.udemy.pontointeligente.api.helper.LancamentoDtoHelper;
-import br.com.udemy.pontointeligente.api.helper.StringHelper;
 import br.com.udemy.pontointeligente.api.modelo.dto.LancamentoDto;
 import br.com.udemy.pontointeligente.api.modelo.entity.Funcionario;
 import br.com.udemy.pontointeligente.api.modelo.entity.Lancamento;
@@ -111,7 +110,7 @@ public class LancamentoController {
 		
 		validaFuncionario(lancamentoDto.getFuncionarioId(), result);
 		
-		validaLancamentoTipo(lancamentoDto.getTipo(), result);
+		Lancamento lancamento = convertToLancamento(lancamentoDto, result);
 		
 		if(result.hasErrors()) {
 			
@@ -122,8 +121,6 @@ public class LancamentoController {
 			return ResponseEntity.badRequest().body(response);
 			
 		} else {
-			
-			Lancamento lancamento = convertToLancamento(lancamentoDto);
 			
 			lancamentoService.persiste(lancamento);
 			
@@ -145,6 +142,10 @@ public class LancamentoController {
 		
 		validaFuncionario(lancamentoDto.getFuncionarioId(), result);
 		
+		lancamentoDto.setId(Optional.of(id));
+		
+		Lancamento lancamento = convertToLancamento(lancamentoDto, result);
+		
 		if(result.hasErrors()) {
 			
 			result.getAllErrors().forEach(error -> response.getErros().add(error.getDefaultMessage()));
@@ -153,9 +154,6 @@ public class LancamentoController {
 			
 		} else {
 			
-			lancamentoDto.setId(Optional.of(id));
-			
-			Lancamento lancamento = convertToLancamento(lancamentoDto);
 			lancamento.setDataCriacao(new Date());
 			
 			lancamentoService.persiste(lancamento);
@@ -195,19 +193,45 @@ public class LancamentoController {
 		
 	}
 	
-	private Lancamento convertToLancamento(LancamentoDto lancamentoDto) throws ParseException {
+	private Lancamento convertToLancamento(LancamentoDto lancamentoDto, BindingResult result) throws ParseException {
 		
 		Lancamento lancamento = new Lancamento();
+		
+		if(lancamentoDto.getId().isPresent()) {
+			
+			Optional<Lancamento> lanc = lancamentoService.buscaPorId(lancamentoDto.getId().get());
+			
+			if(lanc.isPresent()) {
+				
+				lancamento = lanc.get();
+				
+			} else {
+				
+				result.addError(new ObjectError("lancamento", "Lançamento não encontrado"));
+				
+			}
+			
+		} else {
+			
+			lancamento.setFuncionario(new Funcionario());
+			lancamento.getFuncionario().setId(lancamentoDto.getFuncionarioId());
+			
+		}
+		
 		lancamento.setData(DateHelper.toDate(lancamentoDto.getData(), "yyyy-MM-dd HH:mm:ss"));
 		lancamento.setDescricao(lancamentoDto.getDescricao());
 		lancamento.setLocalizacao(lancamentoDto.getLocalizacao());
-		lancamento.setTipo(LancamentoTipo.valueOf(lancamentoDto.getTipo()));
 		
-		lancamentoDto.getId().ifPresent(id -> lancamento.setId(id));
+		if(LancamentoTipo.isValidEnum(lancamentoDto.getTipo())) {
+			
+			lancamento.setTipo(LancamentoTipo.valueOf(lancamentoDto.getTipo()));
+			
+		} else {
+			
+			result.addError(new ObjectError("tipo", "Tipo inválido"));
+			
+		}
 		
-		Optional<Funcionario> funcionario = funcionarioService.buscaPorId(lancamentoDto.getFuncionarioId());
-		
-		funcionario.ifPresent(func -> lancamento.setFuncionario(func));
 		
 		return lancamento;
 		
@@ -235,27 +259,4 @@ public class LancamentoController {
 		
 	}
 	
-	private void validaLancamentoTipo(String lancamentoTipo, BindingResult result) {
-		
-		LOG.info("Validando lancamentoTipo: {}", lancamentoTipo);
-		
-		if(StringHelper.isNullOrEmpty(lancamentoTipo)) {
-			
-			result.addError(new ObjectError("tipo", "Tipo de lançamento não informado"));
-			
-		} else {
-			
-			Optional<LancamentoTipo> tipo = LancamentoTipo.fromString(lancamentoTipo);
-			
-			if(!tipo.isPresent()) {
-				
-				result.addError(new ObjectError("tipo", "Tipo de lançamento inxistente"));
-				
-			}
-			
-		}
-		
-		
-	}
-
 }

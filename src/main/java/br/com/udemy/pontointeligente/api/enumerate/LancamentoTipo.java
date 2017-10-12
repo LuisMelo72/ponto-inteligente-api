@@ -1,6 +1,6 @@
 package br.com.udemy.pontointeligente.api.enumerate;
 
-import java.util.Optional;
+import org.apache.commons.lang3.EnumUtils;
 
 public enum LancamentoTipo {
 	
@@ -11,21 +11,11 @@ public enum LancamentoTipo {
 	PAUSA_INICIO,
 	PAUSA_FIM;
 	
-	public static Optional<LancamentoTipo> fromString(String name) {
+	public static boolean isValidEnum(String value) {
 		
-		Optional<LancamentoTipo> lancamentoTipo = Optional.empty();
+		boolean validEnum = EnumUtils.isValidEnum(LancamentoTipo.class, value);
 		
-		for (LancamentoTipo tipo : LancamentoTipo.values()) {
-			
-			if(tipo.name().equalsIgnoreCase(name)) {
-				
-				lancamentoTipo = Optional.of(tipo);
-				
-			}
-			
-		}
-		
-		return lancamentoTipo;
+		return validEnum;
 		
 	}
 
