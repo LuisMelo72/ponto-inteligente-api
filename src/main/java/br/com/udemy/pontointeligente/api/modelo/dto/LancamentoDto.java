@@ -10,10 +10,11 @@ public class LancamentoDto {
 	
 	@NotEmpty(message="Data não pode ser vazia")
 	private String data;
+	
 	private String tipo;
 	private String descricao;
 	private String localizacao;
-	private String funcionarioId;
+	private Long funcionarioId;
 	
 	public LancamentoDto() {
 		id = Optional.empty();
@@ -65,11 +66,11 @@ public class LancamentoDto {
 		this.localizacao = localizacao;
 	}
 
-	public String getFuncionarioId() {
+	public Long getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(String funcionarioId) {
+	public void setFuncionarioId(Long funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 	

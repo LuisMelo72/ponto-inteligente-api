@@ -31,10 +31,10 @@ public class Lancamento implements DataCriavel, DataAtualizavel {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	
-	@Column(nullable=false)
+	@Column
 	private String descricao;
 	
-	@Column(nullable=false)
+	@Column
 	private String localizacao;
 	
 	@Temporal(TemporalType.TIMESTAMP)

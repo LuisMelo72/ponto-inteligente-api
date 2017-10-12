@@ -5,13 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DataHelper {
+public class DateHelper {
 	
-	DataHelper() {
+	DateHelper() {
 	
 	}
 	
-	public Date toDate(String texto, String pattern) throws ParseException {
+	public static Date toDate(String texto, String pattern) throws ParseException {
 		
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 		

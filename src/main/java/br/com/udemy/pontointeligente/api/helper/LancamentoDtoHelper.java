@@ -16,7 +16,7 @@ public class LancamentoDtoHelper {
 		LancamentoDto lancamentoDto = new LancamentoDto();
 		lancamentoDto.setData(StringHelper.toString(lancamento.getData(), "yyyy-MM-dd HH:mm:ss"));
 		lancamentoDto.setDescricao(lancamento.getDescricao());
-		lancamentoDto.setFuncionarioId(lancamento.getFuncionario().getId().toString());
+		lancamentoDto.setFuncionarioId(lancamento.getFuncionario().getId());
 		lancamentoDto.setId(Optional.of(lancamento.getId()));
 		lancamentoDto.setLocalizacao(lancamento.getLocalizacao());
 		lancamentoDto.setTipo(lancamento.getTipo().toString());
